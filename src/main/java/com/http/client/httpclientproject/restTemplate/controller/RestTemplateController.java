@@ -31,8 +31,8 @@ public class RestTemplateController {
 
     @PostMapping("/request")
     @Operation(summary = "호출 api", description = "호출 api")
-    public RestResponseDTO requestApi(@Valid @RequestBody RestRequestDTO restRequestDTO){
-        log.info("{}", restRequestDTO);
+    public RestResponseDTO requestApi(@RequestBody RestRequestDTO restRequestDTO){
+        log.info("[RestTemplateController.requestApi] {}", restRequestDTO);
         return restTemplateService.requestApi(restRequestDTO);
     }
 
@@ -42,7 +42,7 @@ public class RestTemplateController {
             @Parameter(name = "content", description = "내용", schema = @Schema(type = "string"))
     })
     public ResponseEntity<RestResponseDTO> responseApi(@Parameter(hidden = true) RestRequestDTO restRequestDTO){
-        log.info("{}", restRequestDTO);
+        log.info("[RestTemplateController.resposneApi] {}", restRequestDTO);
         RestResponseDTO restResponseDTO = restTemplateService.responseApi(restRequestDTO);
         return new ResponseEntity<>(restResponseDTO, HttpStatus.OK);
     }

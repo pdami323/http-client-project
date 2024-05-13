@@ -4,7 +4,6 @@ import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,7 +29,7 @@ public class RestTemplateService {
     }
 
     public RestResponseDTO responseApi(RestRequestDTO restRequestDTO) {
-        log.info("{}", restRequestDTO.getContent());
+        log.info("[RestTemplateService.responseApi] {}", restRequestDTO.getContent());
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:8080")
                 .path("/rest-template/request")
@@ -38,7 +37,7 @@ public class RestTemplateService {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<RestRequestDTO> httpEntity = new HttpEntity<>(restRequestDTO,headers);
 
-        ResponseEntity<RestResponseDTO> result = restTemplate.exchange(uri, HttpMethod.GET,httpEntity, RestResponseDTO.class);
+        ResponseEntity<RestResponseDTO> result = restTemplate.exchange(uri, HttpMethod.POST,httpEntity, RestResponseDTO.class);
         return result.getBody();
     }
 }
