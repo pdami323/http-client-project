@@ -1,9 +1,9 @@
-package com.http.client.httpclientproject.webClient.controller;
+package com.http.client.httpclientproject.webClient.example.controller;
 
 import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO;
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;
-import com.http.client.httpclientproject.webClient.dto.request.RequestDTO;
-import com.http.client.httpclientproject.webClient.service.WebClientService;
+import com.http.client.httpclientproject.webClient.example.service.WebClientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@Tag(name = "02. WebClient Example", description = "WebClient Example")
 public class WebClientController {
 
     private final WebClientService webClientService;

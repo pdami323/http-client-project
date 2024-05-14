@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.webClient.dto.request;
+package com.http.client.httpclientproject.webClient.example.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

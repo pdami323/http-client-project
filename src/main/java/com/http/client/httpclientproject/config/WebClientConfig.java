@@ -13,8 +13,8 @@ import java.time.Duration;
 
 @Configuration
 public class WebClientConfig {
-
-    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory();
+    private final static String BASE_URL = "http://localhost:8080";
+    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(BASE_URL);
 
     //HttpClient 연결시간을 총 10초로 설정
     HttpClient httpClient = HttpClient.create()
@@ -22,8 +22,9 @@ public class WebClientConfig {
 
     @Bean
     public WebClient webClient(){
-        factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+        factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.TEMPLATE_AND_VALUES);
         return WebClient.builder()
+                .baseUrl(BASE_URL)
                 .uriBuilderFactory(factory)
                 .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(2*1024*1024))
                 .clientConnector(new ReactorClientHttpConnector(httpClient))

@@ -19,7 +19,6 @@ public class WebClientUtil {
         return webClientConfig.webClient().method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new BizException(new ErrorCode(HttpStatus.BAD_REQUEST, "fail_web_client_get"))))
                 .bodyToMono(resposneDTOClass)
                 .block();
     }
