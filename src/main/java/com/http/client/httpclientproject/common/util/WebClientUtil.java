@@ -1,13 +1,9 @@
-package com.http.client.httpclientproject.util;
+package com.http.client.httpclientproject.common.util;
 
-import com.http.client.httpclientproject.config.WebClientConfig;
-import com.http.client.httpclientproject.exception.BizException;
-import com.http.client.httpclientproject.exception.ErrorCode;
+import com.http.client.httpclientproject.common.config.WebClientConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor

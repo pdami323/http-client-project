@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.config;
+package com.http.client.httpclientproject.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

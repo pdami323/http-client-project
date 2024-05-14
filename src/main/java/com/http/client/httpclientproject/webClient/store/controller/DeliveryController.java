@@ -1,6 +1,6 @@
 package com.http.client.httpclientproject.webClient.store.controller;
 
-import com.http.client.httpclientproject.config.WebClientConfig;
+import com.http.client.httpclientproject.common.config.WebClientConfig;
 import com.http.client.httpclientproject.webClient.store.dto.Food;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

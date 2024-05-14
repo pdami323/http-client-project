@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.exception;
+package com.http.client.httpclientproject.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

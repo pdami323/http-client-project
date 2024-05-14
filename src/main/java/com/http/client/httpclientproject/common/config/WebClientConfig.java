@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.config;
+package com.http.client.httpclientproject.common.config;
 
 import io.netty.channel.ChannelOption;
 import org.springframework.context.annotation.Bean;

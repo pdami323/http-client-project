@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.properties;
+package com.http.client.httpclientproject.common.properties;
 
 import lombok.Getter;
 import lombok.Setter;

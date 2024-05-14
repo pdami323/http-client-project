@@ -1,6 +1,6 @@
-package com.http.client.httpclientproject.config;
+package com.http.client.httpclientproject.common.config;
 
-import com.http.client.httpclientproject.properties.SwaggerProperty;
+import com.http.client.httpclientproject.common.properties.SwaggerProperty;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

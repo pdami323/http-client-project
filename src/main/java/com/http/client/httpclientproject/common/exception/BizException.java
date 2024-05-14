@@ -1,8 +1,7 @@
-package com.http.client.httpclientproject.exception;
+package com.http.client.httpclientproject.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @AllArgsConstructor

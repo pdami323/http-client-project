@@ -2,7 +2,7 @@ package com.http.client.httpclientproject.webClient.example.service;
 
 import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO;
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;
-import com.http.client.httpclientproject.util.WebClientUtil;
+import com.http.client.httpclientproject.common.util.WebClientUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
