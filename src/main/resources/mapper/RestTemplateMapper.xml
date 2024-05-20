@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.http.client.httpclientproject.restTemplate.dao.RestTemplateDAO">
+
+    <insert id="createUser" parameterType="com.http.client.httpclientproject.restTemplate.dto.request.UserRequestDTO">
+        INSERT INTO TB_USER (
+            name,
+            age
+        ) VALUES (
+            #{userName},
+            #{age}
+        )
+    </insert>
+
+</mapper>

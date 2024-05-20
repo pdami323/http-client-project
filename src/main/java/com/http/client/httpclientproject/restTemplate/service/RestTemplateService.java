@@ -1,8 +1,9 @@
 package com.http.client.httpclientproject.restTemplate.service;
 
 import com.http.client.httpclientproject.common.config.RestTemplateConfig;
-import com.http.client.httpclientproject.common.config.WebClientConfig;
+import com.http.client.httpclientproject.restTemplate.dao.RestTemplateDAO;
 import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO;
+import com.http.client.httpclientproject.restTemplate.dto.request.UserRequestDTO;
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -21,6 +23,8 @@ import java.net.URI;
 public class RestTemplateService {
 
     private final RestTemplateConfig restTemplateConfig;
+
+    private final RestTemplateDAO restTemplateDAO;
 
     public RestResponseDTO requestApi(RestRequestDTO restRequestDTO) {
         RestResponseDTO restResponseDTO = new RestResponseDTO();
@@ -41,5 +45,12 @@ public class RestTemplateService {
         ResponseEntity<RestResponseDTO> result = restTemplateConfig.restTemplate()
                                     .exchange(uri, HttpMethod.POST,httpEntity, RestResponseDTO.class);
         return result.getBody();
+    }
+
+    @Transactional
+    public void createUser(UserRequestDTO userRequestDTO) {
+        log.info("[RestTemplateService.createUser] start");
+        restTemplateDAO.createUser(userRequestDTO);
+        log.info("[RestTemplateService.createUser] end");
     }
 }

@@ -1,6 +1,14 @@
 spring:
   application:
     name: http-client-project
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:33066/store
+    username: root
+    password: myrootpass
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
 
 springdoc:
   packages-to-scan: com.http.client.httpclientproject

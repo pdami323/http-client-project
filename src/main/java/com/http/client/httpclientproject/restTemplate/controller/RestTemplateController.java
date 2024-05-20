@@ -1,6 +1,7 @@
 package com.http.client.httpclientproject.restTemplate.controller;
 
 import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO;
+import com.http.client.httpclientproject.restTemplate.dto.request.UserRequestDTO;
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;
 import com.http.client.httpclientproject.restTemplate.service.RestTemplateService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,5 +44,12 @@ public class RestTemplateController {
         log.info("[RestTemplateController.resposneApi] {}", restRequestDTO);
         RestResponseDTO restResponseDTO = restTemplateService.responseApi(restRequestDTO);
         return new ResponseEntity<>(restResponseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/user")
+    @Operation(summary = "사용자 등록", description = "사용자 등록")
+    public ResponseEntity<Void> createUser(@RequestBody UserRequestDTO userRequestDTO){
+        restTemplateService.createUser(userRequestDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
