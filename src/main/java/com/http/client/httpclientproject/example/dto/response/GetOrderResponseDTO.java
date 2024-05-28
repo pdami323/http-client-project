@@ -15,6 +15,9 @@ public class GetOrderResponseDTO {
     @Schema(description = "메뉴")
     private String menu;
 
+    @Schema(description = "수량")
+    private Integer quantity;
+
     @Schema(description = "주문 상태")
     private String orderStatus;
 }

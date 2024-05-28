@@ -6,6 +6,8 @@ import com.http.client.httpclientproject.example.vo.TbOrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface OrderDAO {
@@ -14,4 +16,6 @@ public interface OrderDAO {
     Integer modifyOrder(TbOrderVO tbOrderVO);
 
     GetOrderResponseDTO getOrder(Integer orderId);
+
+    List<GetOrderResponseDTO> getOrderList();
 }

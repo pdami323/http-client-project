@@ -5,6 +5,7 @@ import com.http.client.httpclientproject.example.dto.response.GetOrderResponseDT
 import com.http.client.httpclientproject.example.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -33,12 +36,19 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    @Operation(summary = "음료 제공", description = "음료 제공")
+    @Operation(summary = "개별 음료 제공", description = "개별 음료 제공")
     public ResponseEntity<GetOrderResponseDTO> getOrder(@PathVariable Integer orderId){
         CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
         createOrderRequestDTO.setOrderId(orderId);
-        GetOrderResponseDTO getOrderResponseDTO = orderService.getOrderResponseDTO(createOrderRequestDTO);
+        GetOrderResponseDTO getOrderResponseDTO = orderService.getOrderAndCook(createOrderRequestDTO);
         return new ResponseEntity<>(getOrderResponseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping()
+    @Operation(summary = "음료 제공", description = "음료 제공")
+    public ResponseEntity<List<GetOrderResponseDTO>> getOrderList(){
+        List<GetOrderResponseDTO> result = orderService.getOrderList();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/total")
@@ -47,7 +57,7 @@ public class OrderController {
         log.info("{}", createOrderRequestDTO);
         GetOrderResponseDTO getOrderResponseDTO = orderService.createOrder(createOrderRequestDTO);
         createOrderRequestDTO.setOrderId(getOrderResponseDTO.getOrderId());
-        getOrderResponseDTO = orderService.getOrderResponseDTO(createOrderRequestDTO);
+        getOrderResponseDTO = orderService.getOrderAndCook(createOrderRequestDTO);
         return new ResponseEntity<>(getOrderResponseDTO, HttpStatus.OK);
     }
 }

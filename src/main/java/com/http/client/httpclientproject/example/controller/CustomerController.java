@@ -20,14 +20,14 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @GetMapping()
+    @GetMapping("/test")
     @Operation(description = "주문과 음식 동시", summary = "주문 후 음식 받기")
     public ResponseEntity<Void> asyncTest(){
         customerService.asyncTest();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping("/test2")
     @Operation(description = "주문과 음식 개별", summary = "주문 후 음식 받기")
     public ResponseEntity<Void> asyncTest2(){
         customerService.asyncTestSeparated();

@@ -32,4 +32,14 @@
         WHERE ORDER_ID = #{orderId}
     </select>
 
+    <select id="getOrderList" resultType="com.http.client.httpclientproject.example.dto.response.GetOrderResponseDTO">
+        SELECT
+            ORDER_ID AS ORDERID,
+            MENU,
+            QUANTITY,
+            ORDER_STATUS AS ORDERSTATUS
+        FROM TB_ORDER
+        WHERE ORDER_STATUS = 'WAITING'
+    </select>
+
 </mapper>
