@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/deliver")
-@Tag(name = "04. WebClient-delivery", description = "앱으로 주문하기")
+@Tag(name = "03. WebClient-delivery", description = "앱으로 주문하기")
 public class DeliveryController {
 
     private final WebClientConfig webClientConfig;

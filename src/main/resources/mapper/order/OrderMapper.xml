@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.http.client.httpclientproject.example.dao.OrderDAO">
+
+    <insert id="createOrder" parameterType="com.http.client.httpclientproject.example.dto.request.CreateOrderRequestDTO" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO TB_ORDER (
+            CUSTOMER_ID,
+            MENU,
+            QUANTITY,
+            ORDER_STATUS
+        ) VALUES (
+            #{customerId},
+            #{menu},
+            #{quantity},
+            #{orderStatus}
+        )
+    </insert>
+
+    <update id="modifyOrder" parameterType="com.http.client.httpclientproject.example.vo.TbOrderVO">
+        UPDATE TB_ORDER
+        SET
+            ORDER_STATUS = #{orderStatus}
+        WHERE ORDER_ID = #{orderId}
+    </update>
+
+    <select id="getOrder" parameterType="java.lang.Integer" resultType="com.http.client.httpclientproject.example.dto.response.GetOrderResponseDTO">
+        SELECT
+            ORDER_ID AS ORDERID,
+            MENU AS MENU,
+            ORDER_STATUS AS ORDERSTATUS
+        FROM TB_ORDER
+        WHERE ORDER_ID = #{orderId}
+    </select>
+
+</mapper>
