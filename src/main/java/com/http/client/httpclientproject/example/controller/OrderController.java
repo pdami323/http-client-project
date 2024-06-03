@@ -5,7 +5,6 @@ import com.http.client.httpclientproject.example.dto.response.GetOrderResponseDT
 import com.http.client.httpclientproject.example.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,7 +44,7 @@ public class OrderController {
     }
 
     @GetMapping()
-    @Operation(summary = "음료 제공", description = "음료 제공")
+    @Operation(summary = "전체 음료 제공", description = "전체 음료 제공")
     public ResponseEntity<List<GetOrderResponseDTO>> getOrderList(){
         List<GetOrderResponseDTO> result = orderService.getOrderList();
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -54,7 +53,6 @@ public class OrderController {
     @PostMapping("/total")
     @Operation(summary = "전체 로직", description = "전체 로직")
     public ResponseEntity<GetOrderResponseDTO> summary(@RequestBody CreateOrderRequestDTO createOrderRequestDTO){
-        log.info("{}", createOrderRequestDTO);
         GetOrderResponseDTO getOrderResponseDTO = orderService.createOrder(createOrderRequestDTO);
         createOrderRequestDTO.setOrderId(getOrderResponseDTO.getOrderId());
         getOrderResponseDTO = orderService.getOrderAndCook(createOrderRequestDTO);

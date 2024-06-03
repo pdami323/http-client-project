@@ -13,9 +13,9 @@ public class RestClientConfig {
 
     @Bean
     public RestClient restClient(){
-        return RestClient.create(restTemplateConfig.restTemplate());
-//        return RestClient.builder()
-//                .baseUrl("http://localhost:8080/")
-//                .build();
+//        return RestClient.create(restTemplateConfig.restTemplate());
+        return RestClient.builder()
+                .baseUrl("http://localhost:8080/")
+                .build();
     }
 }

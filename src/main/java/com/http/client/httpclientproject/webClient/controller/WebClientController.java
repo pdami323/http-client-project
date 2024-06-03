@@ -1,8 +1,8 @@
-package com.http.client.httpclientproject.webClient.example.controller;
+package com.http.client.httpclientproject.webClient.controller;
 
 import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO;
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;
-import com.http.client.httpclientproject.webClient.example.service.WebClientService;
+import com.http.client.httpclientproject.webClient.service.WebClientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

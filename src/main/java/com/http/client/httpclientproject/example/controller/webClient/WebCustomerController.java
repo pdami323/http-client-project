@@ -1,6 +1,6 @@
-package com.http.client.httpclientproject.example.controller;
+package com.http.client.httpclientproject.example.controller.webClient;
 
-import com.http.client.httpclientproject.example.service.CustomerService;
+import com.http.client.httpclientproject.example.service.webClient.WebCustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,22 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/customer")
-@Tag(name = "06. 입장", description = "입장")
-public class CustomerController {
+@Tag(name = "06. WebClient 예제", description = "WebClient 예제")
+public class WebCustomerController {
 
-    private final CustomerService customerService;
+    private final WebCustomerService webCustomerService;
 
-    @GetMapping("/test")
-    @Operation(description = "주문과 음식 동시", summary = "주문 후 음식 받기")
+    @GetMapping("/async")
+    @Operation(description = "비동기 처리", summary = "비동기 처리")
     public ResponseEntity<Void> asyncTest(){
-        customerService.asyncTest();
+        webCustomerService.asyncTest();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/test2")
-    @Operation(description = "주문과 음식 개별", summary = "주문 후 음식 받기")
-    public ResponseEntity<Void> asyncTest2(){
-        customerService.asyncTestSeparated();
+    @GetMapping("/sync")
+    @Operation(summary = "동기 처리", description = "동기 처리")
+    public ResponseEntity<Void> syncTest(){
+        webCustomerService.syncTest();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -9,6 +9,11 @@ spring:
 
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
+  configuration:
+    # NULL 값을 위한 JDBC 타입 설정 : null값이 있을 경우 NULL로 설정
+    jdbc-type-for-null: NULL
+    # 언더스코어를 카멜 케이스로 맵핑 설정
+    map-underscore-to-camel-case: true
 
 springdoc:
   packages-to-scan: com.http.client.httpclientproject

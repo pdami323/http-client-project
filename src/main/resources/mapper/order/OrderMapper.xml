@@ -25,19 +25,20 @@
 
     <select id="getOrder" parameterType="java.lang.Integer" resultType="com.http.client.httpclientproject.example.dto.response.GetOrderResponseDTO">
         SELECT
-            ORDER_ID AS ORDERID,
-            MENU AS MENU,
-            ORDER_STATUS AS ORDERSTATUS
+            ORDER_ID,
+            CUSTOMER_ID,
+            MENU,
+            ORDER_STATUS
         FROM TB_ORDER
         WHERE ORDER_ID = #{orderId}
     </select>
 
     <select id="getOrderList" resultType="com.http.client.httpclientproject.example.dto.response.GetOrderResponseDTO">
         SELECT
-            ORDER_ID AS ORDERID,
+            ORDER_ID,
             MENU,
             QUANTITY,
-            ORDER_STATUS AS ORDERSTATUS
+            ORDER_STATUS
         FROM TB_ORDER
         WHERE ORDER_STATUS = 'WAITING'
     </select>

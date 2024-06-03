@@ -2,7 +2,6 @@ package com.http.client.httpclientproject.example.service;
 
 import com.http.client.httpclientproject.common.constant.CommonConstant;
 import com.http.client.httpclientproject.common.exception.UserException;
-import com.http.client.httpclientproject.common.exception.ErrorCode;
 import com.http.client.httpclientproject.example.dao.OrderDAO;
 import com.http.client.httpclientproject.example.dto.request.CreateOrderRequestDTO;
 import com.http.client.httpclientproject.example.dto.response.GetOrderResponseDTO;
@@ -10,7 +9,6 @@ import com.http.client.httpclientproject.example.vo.TbOrderVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +23,11 @@ public class OrderService {
     private final OrderDAO orderDAO;
 
     public GetOrderResponseDTO createOrder(CreateOrderRequestDTO createOrderRequestDTO) {
-        log.info("[OrderService.createOrder] start, {} 메뉴 - {}개", createOrderRequestDTO.getMenu(), createOrderRequestDTO.getQuantity());
+        log.info("[OrderService.createOrder] start, {}번째 손님 : {} 메뉴 - {}개"
+                ,createOrderRequestDTO.getCustomerId(), createOrderRequestDTO.getMenu(), createOrderRequestDTO.getQuantity());
+        Integer customerId = createOrderRequestDTO.getCustomerId();
         GetOrderResponseDTO getOrderResponseDTO = new GetOrderResponseDTO();
-        log.info("[OrderService.createOrder] 1. 주문 등록 start");
+        log.info("[OrderService.createOrder] 1. {}번째 손님 - 주문 등록 start", customerId);
         try {
             createOrderRequestDTO.setOrderStatus(CommonConstant.ORDER_STATUS_WAITING);
             orderDAO.createOrder(createOrderRequestDTO);
@@ -35,28 +35,30 @@ public class OrderService {
             log.error("[OrderService.createOrder] 주문 등록 중 오류가 발생했습니다., {}", e.getMessage());
             throw new UserException(INTERNAL_SERVER_ERROR);
         }
-        log.info("[OrderService.createOrder] 1. 주문 등록 end");
+        log.info("[OrderService.createOrder] 1. {}번째 손님 - 주문 등록 end", customerId);
         getOrderResponseDTO.setOrderId(createOrderRequestDTO.getOrderId());
         log.info("[OrderService.createOrder] end, {}", createOrderRequestDTO.getOrderId());
         return getOrderResponseDTO;
     }
 
     public GetOrderResponseDTO getOrderAndCook(CreateOrderRequestDTO createOrderRequestDTO) {
-        log.info("[OrderService.getOrder] start");
+        log.info("[OrderService.getOrder] start, {}번째 손님 : {} 메뉴 - {}개"
+                ,createOrderRequestDTO.getCustomerId(), createOrderRequestDTO.getMenu(), createOrderRequestDTO.getQuantity());
+        Integer customerId = createOrderRequestDTO.getCustomerId();
         GetOrderResponseDTO result = new GetOrderResponseDTO();
         if (createOrderRequestDTO.getQuantity()==null){
             createOrderRequestDTO.setQuantity(1);
         }
-        log.info("[OrderService.getOrder] 1. 음식 준비 start");
+        log.info("[OrderService.getOrder] 1. {}번째 손님 - 음식 준비 start", customerId);
         try {
             Thread.sleep(1000L * createOrderRequestDTO.getQuantity());
         }catch (Exception e){
             log.error("[OrderService.getOrder] 음식 준비 중 오류가 발생했습니다., {}", e.getMessage());
             throw new UserException(INTERNAL_SERVER_ERROR);
         }
-        log.info("[OrderService.getOrder] 1. 음식 준비 end");
+        log.info("[OrderService.getOrder] 1. {}번째 손님 - 음식 준비 end", customerId);
 
-        log.info("[OrderService.getOrder] 2. 주문 상태 변경 start");
+        log.info("[OrderService.getOrder] 2. {}번째 손님 - 주문 상태 변경 start", customerId);
         try {
             TbOrderVO tbOrderVO = new TbOrderVO();
             tbOrderVO.setOrderId(createOrderRequestDTO.getOrderId());
@@ -66,16 +68,16 @@ public class OrderService {
             log.error("[OrderService.getOrder] 주문상태 변경 중 오류가 발생했습니다., {}", e.getMessage());
             throw new UserException(INTERNAL_SERVER_ERROR);
         }
-        log.info("[OrderService.getOrder] 2. 주문 상태 변경 end");
+        log.info("[OrderService.getOrder] 2. {}번째 손님 - 주문 상태 변경 end", customerId);
 
-        log.info("[OrderService.getOrder] 3. 주문 정보 조회 start");
+        log.info("[OrderService.getOrder] 3. {}번째 손님 - 주문 정보 조회 start", customerId);
         try {
             result = orderDAO.getOrder(createOrderRequestDTO.getOrderId());
         }catch (UserException e){
             log.error("[OrderService.getOrder] 주문정보 조회 중 오류가 발생했습니다., {}", e.getMessage());
             throw new UserException(INTERNAL_SERVER_ERROR);
         }
-        log.info("[OrderService.getOrder] 3. 주문 정보 조회 end");
+        log.info("[OrderService.getOrder] 3. {}번째 손님 - 주문 정보 조회 end", customerId);
         log.info("[OrderService.getOrder] end, {}", result);
         return result;
     }

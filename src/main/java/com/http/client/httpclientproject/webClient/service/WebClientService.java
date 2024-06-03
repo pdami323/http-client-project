@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.webClient.example.service;
+package com.http.client.httpclientproject.webClient.service;
 
 import com.http.client.httpclientproject.restTemplate.dto.request.RestRequestDTO;
 import com.http.client.httpclientproject.restTemplate.dto.response.RestResponseDTO;

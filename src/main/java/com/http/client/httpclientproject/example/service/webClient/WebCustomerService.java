@@ -1,4 +1,4 @@
-package com.http.client.httpclientproject.example.service;
+package com.http.client.httpclientproject.example.service.webClient;
 
 import com.http.client.httpclientproject.common.config.WebClientConfig;
 import com.http.client.httpclientproject.common.exception.UserException;
@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -21,25 +20,25 @@ import static com.http.client.httpclientproject.common.exception.ErrorCode.INTER
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CustomerService {
+public class WebCustomerService {
 
     private final WebClientConfig webClientConfig;
+    private final Random random = new Random();
     private static final String[] MENU = {
-            "AMERICANO", "LATTE", "BREAD", "ICE CREAM"
+            "AMERICANO", "LATTE", "BREAD", "ICE CREAM", "MILK"
     };
-    private final WebClient webClient;
+    private static final Integer COUNT = 2;
 
+    @Transactional
     public void asyncTest() {
         log.info("[CustomerService.async] 비동기 테스트 start");
-        CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
-        Random random = new Random();
         int order_num;
         int count;
-        for (int i=1;i<=10;i++){
+        for (int i=1;i<=COUNT;i++){
             log.info("[CustomerService.async] {}번째 손님 입장", i);
             order_num = random.nextInt(MENU.length);
             count = random.nextInt(10)+1;
-            log.info("{}번째 메뉴로 {}개", order_num, count);
+            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
             createOrderRequestDTO.setCustomerId(i);
             createOrderRequestDTO.setMenu(MENU[order_num]);
             createOrderRequestDTO.setQuantity(count);
@@ -54,21 +53,47 @@ public class CustomerService {
             result.subscribe(
                     getOrderResponseDTO -> {
                         log.info("성공");
-                        log.info("{}", getOrderResponseDTO);
-                    },
-                    error -> {
-                        log.info("에러");
+                        resultCheck(getOrderResponseDTO);
                     }
             );
-            log.info("[CustomerService.async] {}번째 손님 퇴장", i);
         }
         log.info("[CustomerService.async] 비동기 테스트 end");
     }
 
+    @Transactional
+    public void syncTest() {
+        log.info("[CustomerService.syncTest] 동기 테스트 start");
+        log.info("[CustomerService.syncTest] 1. 손님이 들어와서 입장 후 주문");
+        int order_num;
+        int count;
+        for (int i=1; i<=COUNT;i++){
+            log.info("[CustomerService.syncTest] {}번째 손님 입장", i);
+            order_num = random.nextInt(MENU.length);
+            count = random.nextInt(10)+1;
+            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
+            createOrderRequestDTO.setCustomerId(i);
+            createOrderRequestDTO.setMenu(MENU[order_num]);
+            createOrderRequestDTO.setQuantity(count);
+            GetOrderResponseDTO result = webClientConfig.webClient().post()
+                    .uri(uriBuilder -> uriBuilder.path("/order/total").build())
+                    .bodyValue(createOrderRequestDTO)
+                    .retrieve()
+                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+                        throw new UserException(INTERNAL_SERVER_ERROR);
+                    })
+                    .bodyToMono(GetOrderResponseDTO.class).block();
+            if(result != null){
+                resultCheck(result);
+            }
+        }
+        log.info("[CustomerService.syncTest] 동기 테스트 end");
+    }
+
+
+    @Transactional
     public void asyncTestSeparated() {
         log.info("[CustomerService.asyncTestSeparated] start");
         log.info("[CustomerService.asyncTestSeparated] 1. 주문");
-        CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
         Random random = new Random();
         int order_num;
         int count;
@@ -77,6 +102,7 @@ public class CustomerService {
             order_num = random.nextInt(MENU.length);
             count = random.nextInt(10)+1;
             log.info("{}번째 메뉴로 {}개", order_num, count);
+            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
             createOrderRequestDTO.setCustomerId(i);
             createOrderRequestDTO.setMenu(MENU[order_num]);
             createOrderRequestDTO.setQuantity(count);
@@ -121,5 +147,9 @@ public class CustomerService {
             log.info("[CustomerService.asyncTestSeparated] {}번째 손님 퇴장", orderList);
         }
         log.info("[CustomerService.asyncTestSeparated] end");
+    }
+
+    private void resultCheck(GetOrderResponseDTO result){
+        log.info("[CustomerService.resultCheck] {}번째 손님 퇴장", result.getCustomerId());
     }
 }

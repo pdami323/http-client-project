@@ -12,6 +12,9 @@ public class GetOrderResponseDTO {
     @Schema(description = "주문 ID")
     private Integer orderId;
 
+    @Schema(description = "고객 ID")
+    private Integer customerId;
+
     @Schema(description = "메뉴")
     private String menu;
 

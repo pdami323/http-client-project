@@ -1,6 +1,6 @@
-package com.http.client.httpclientproject.example.controller;
+package com.http.client.httpclientproject.webClientExample.controller;
 
-import com.http.client.httpclientproject.example.service.CustomerService;
+import com.http.client.httpclientproject.example.service.webClient.WebCustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +10,13 @@ import java.util.Random;
 
 @Slf4j
 @SpringBootTest
-class CustomerControllerTest {
+class RestWebCustomerControllerTest {
 
     @Autowired
-    private CustomerService customerService;
+    private WebCustomerService webCustomerService;
     @Test
     void customer(){
-        customerService.asyncTest();
+        webCustomerService.asyncTest();
     }
 
     @Test
