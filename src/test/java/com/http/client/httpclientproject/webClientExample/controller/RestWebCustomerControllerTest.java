@@ -16,7 +16,7 @@ class RestWebCustomerControllerTest {
     private WebCustomerService webCustomerService;
     @Test
     void customer(){
-        webCustomerService.asyncTest();
+        webCustomerService.asynNonBlocking();
     }
 
     @Test

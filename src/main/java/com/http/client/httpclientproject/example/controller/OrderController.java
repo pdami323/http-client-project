@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/order")
-@Tag(name = "07. 주문 관리", description = "주문")
+@Tag(name = "06. 주문 관리", description = "주문")
 public class OrderController {
 
     private final OrderService orderService;

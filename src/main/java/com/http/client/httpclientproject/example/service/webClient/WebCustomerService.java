@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 import static com.http.client.httpclientproject.common.exception.ErrorCode.INTERNAL_SERVER_ERROR;
 
@@ -30,12 +31,40 @@ public class WebCustomerService {
     private static final Integer COUNT = 2;
 
     @Transactional
-    public void asyncTest() {
-        log.info("[CustomerService.async] 비동기 테스트 start");
+    public void syncBlocking() {
+        log.info("[CustomerService.syncBlocking] sync-Blocking TEST start");
+        int order_num;
+        int count;
+        for (int i=1; i<=COUNT;i++){
+            log.info("[CustomerService.syncBlocking] {}번째 손님 입장", i);
+            order_num = random.nextInt(MENU.length);
+            count = random.nextInt(10)+1;
+            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
+            createOrderRequestDTO.setCustomerId(i);
+            createOrderRequestDTO.setMenu(MENU[order_num]);
+            createOrderRequestDTO.setQuantity(count);
+            GetOrderResponseDTO result = webClientConfig.webClient().post()
+                    .uri(uriBuilder -> uriBuilder.path("/order/total").build())
+                    .bodyValue(createOrderRequestDTO)
+                    .retrieve()
+                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+                        throw new UserException(INTERNAL_SERVER_ERROR);
+                    })
+                    .bodyToMono(GetOrderResponseDTO.class).block();
+            if(result != null){
+                resultCheck(result);
+            }
+        }
+        log.info("[CustomerService.syncBlocking] sync-Blocking TEST end");
+    }
+
+    @Transactional
+    public void asyncNonBlocking() {
+        log.info("[CustomerService.syncNonBlocking] async-NonBlocking TEST start");
         int order_num;
         int count;
         for (int i=1;i<=COUNT;i++){
-            log.info("[CustomerService.async] {}번째 손님 입장", i);
+            log.info("[CustomerService.syncNonBlocking] {}번째 손님 입장", i);
             order_num = random.nextInt(MENU.length);
             count = random.nextInt(10)+1;
             CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
@@ -57,37 +86,89 @@ public class WebCustomerService {
                     }
             );
         }
-        log.info("[CustomerService.async] 비동기 테스트 end");
+        log.info("[CustomerService.syncNonBlocking] async-NonBlocking TEST end");
     }
 
-    @Transactional
-    public void syncTest() {
-        log.info("[CustomerService.syncTest] 동기 테스트 start");
-        log.info("[CustomerService.syncTest] 1. 손님이 들어와서 입장 후 주문");
-        int order_num;
-        int count;
-        for (int i=1; i<=COUNT;i++){
-            log.info("[CustomerService.syncTest] {}번째 손님 입장", i);
-            order_num = random.nextInt(MENU.length);
-            count = random.nextInt(10)+1;
-            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
-            createOrderRequestDTO.setCustomerId(i);
-            createOrderRequestDTO.setMenu(MENU[order_num]);
-            createOrderRequestDTO.setQuantity(count);
-            GetOrderResponseDTO result = webClientConfig.webClient().post()
-                    .uri(uriBuilder -> uriBuilder.path("/order/total").build())
-                    .bodyValue(createOrderRequestDTO)
-                    .retrieve()
-                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
-                        throw new UserException(INTERNAL_SERVER_ERROR);
-                    })
-                    .bodyToMono(GetOrderResponseDTO.class).block();
-            if(result != null){
-                resultCheck(result);
-            }
-        }
-        log.info("[CustomerService.syncTest] 동기 테스트 end");
-    }
+//    @Transactional
+//    public void asyncNonBlocking() {
+//        log.info("[CustomerService.asyncNonBlocking] 비동기 테스트 start");
+//        int order_num;
+//        int count;
+//        for (int i=1;i<=COUNT;i++){
+//            log.info("[CustomerService.asyncNonBlocking] {}번째 손님 입장", i);
+//            order_num = random.nextInt(MENU.length);
+//            count = random.nextInt(10)+1;
+//            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
+//            createOrderRequestDTO.setCustomerId(i);
+//            createOrderRequestDTO.setMenu(MENU[order_num]);
+//            createOrderRequestDTO.setQuantity(count);
+////            Mono<GetOrderResponseDTO> result = webClientConfig.webClient().post()
+////                    .uri(uriBuilder -> uriBuilder.path("/order/total").build())
+////                    .bodyValue(createOrderRequestDTO)
+////                    .retrieve()
+////                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+////                        throw new UserException(INTERNAL_SERVER_ERROR);
+////                    })
+////                    .bodyToMono(GetOrderResponseDTO.class);
+//            CompletableFuture<Mono<GetOrderResponseDTO>> future = CompletableFuture.supplyAsync(()->
+//                            webClientConfig.webClient().post()
+//                                    .uri(uriBuilder -> uriBuilder.path("/order/total").build())
+//                                    .bodyValue(createOrderRequestDTO)
+//                                    .retrieve()
+//                                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+//                                        throw new UserException(INTERNAL_SERVER_ERROR);
+//                                    })
+//                                    .bodyToMono(GetOrderResponseDTO.class)
+//                    ).thenApply(s -> {
+//                        return s.subscribe()
+//            });
+//            log.info("성공");
+//            future.join().subscribe(getOrderResponseDTO -> {
+//                log.info("성공");
+//                resultCheck(getOrderResponseDTO);
+//            });
+////            result.subscribe(
+////                    getOrderResponseDTO -> {
+////                        log.info("성공");
+////                        resultCheck(getOrderResponseDTO);
+////                    }
+////            );
+//        }
+//        log.info("[CustomerService.asyncNonBlocking] 비동기 테스트 end");
+//    }
+
+
+
+//    public void asyncBlocking() {
+//        log.info("[CustomerService.asyncBlocking] async-Blocking 테스트 start");
+//        int order_num;
+//        int count;
+//        for (int i=1; i<=COUNT;i++){
+//            log.info("[CustomerService.asyncBlocking] {}번째 손님 입장", i);
+//            order_num = random.nextInt(MENU.length);
+//            count = random.nextInt(10)+1;
+//            CreateOrderRequestDTO createOrderRequestDTO = new CreateOrderRequestDTO();
+//            createOrderRequestDTO.setCustomerId(i);
+//            createOrderRequestDTO.setMenu(MENU[order_num]);
+//            createOrderRequestDTO.setQuantity(count);
+//            CompletableFuture<GetOrderResponseDTO> result = CompletableFuture.supplyAsync(()->
+//                    webClientConfig.webClient().post()
+//                            .uri(uriBuilder -> uriBuilder.path("/order/total").build())
+//                            .bodyValue(createOrderRequestDTO)
+//                            .retrieve()
+//                            .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+//                                throw new UserException(INTERNAL_SERVER_ERROR);
+//                            })
+//                            .bodyToMono(GetOrderResponseDTO.class).block()
+//            );
+//            try {
+//                resultCheck(result.join());
+//            }catch (Exception e){
+//                log.error("[CustomerService.asyncBlocking] 에러 발생");
+//            }
+//        }
+//        log.info("[CustomerService.asyncBlocking] async-Blocking 테스트 end");
+//    }
 
 
     @Transactional

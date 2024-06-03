@@ -27,11 +27,11 @@ public class RestCustomerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/async")
-    @Operation(summary = "비동기", description = "비동기")
-    public ResponseEntity<Void> asyncTest(){
-        restCustomerService.asyncTest();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @GetMapping("/async")
+//    @Operation(summary = "비동기", description = "비동기")
+//    public ResponseEntity<Void> asyncTest(){
+//        restCustomerService.asyncTest();
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 }

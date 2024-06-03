@@ -15,24 +15,42 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/customer")
-@Tag(name = "06. WebClient 예제", description = "WebClient 예제")
+@Tag(name = "07. WebClient 예제", description = "WebClient 예제")
 public class WebCustomerController {
 
     private final WebCustomerService webCustomerService;
 
-    @GetMapping("/async")
-    @Operation(description = "비동기 처리", summary = "비동기 처리")
-    public ResponseEntity<Void> asyncTest(){
-        webCustomerService.asyncTest();
+    @GetMapping("/sync-blocking")
+    @Operation(summary = "Sync-Blocking 처리", description = "Sync-Blocking 처리")
+    public ResponseEntity<Void> syncTest(){
+        webCustomerService.syncBlocking();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/sync")
-    @Operation(summary = "동기 처리", description = "동기 처리")
-    public ResponseEntity<Void> syncTest(){
-        webCustomerService.syncTest();
+    @GetMapping("/async-nonBlocking")
+    @Operation(summary = "Async-NonBlocking 처리", description = "Async-NonBlocking 처리")
+    public ResponseEntity<Void> asyncNonBlocking(){
+        webCustomerService.asyncNonBlocking();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @GetMapping("/async-nonBlocking")
+//    @Operation(description = "비동기 처리", summary = "비동기 처리")
+//    public ResponseEntity<Void> asyncTest(){
+//        webCustomerService.asyncNonBlocking();
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
+//    @GetMapping("/async-blocking")
+//    @Operation(summary = "비동기-블로킹 처리", description = "비동기-블로킹 처리")
+//    public ResponseEntity<Void> asyncBlocking(){
+//        webCustomerService.asyncBlocking();
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
+
+
+
 
 
 }
