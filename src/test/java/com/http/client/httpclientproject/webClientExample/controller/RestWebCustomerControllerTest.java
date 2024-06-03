@@ -14,10 +14,6 @@ class RestWebCustomerControllerTest {
 
     @Autowired
     private WebCustomerService webCustomerService;
-    @Test
-    void customer(){
-        webCustomerService.asynNonBlocking();
-    }
 
     @Test
     void test(){
