@@ -54,7 +54,8 @@ public class DeliveryController {
         return flux.toStream().collect(Collectors.toList());
     }
 
-    private void welcomeCustomer(boolean block, int people){
+    private void welcomeCustomer(boolean block, int custom){
+        int people = custom;
         while (people-- > 0){
             log.info("{}번째 손님", people);
             Mono<String> mono = webClientConfig.webClient().method(HttpMethod.GET)
