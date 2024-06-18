@@ -19,7 +19,7 @@ public class WebClientConfig {
     //HttpClient 연결시간을 총 10초로 설정
     HttpClient httpClient = HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
-
+    //읽기/쓰기 시간
     @Bean
     public WebClient webClient(){
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.TEMPLATE_AND_VALUES);

@@ -21,10 +21,17 @@ import static com.http.client.httpclientproject.common.exception.ErrorCode.INTER
 public class OrderService {
 
     private final OrderDAO orderDAO;
+    private static Integer a = 9;
 
     public GetOrderResponseDTO createOrder(CreateOrderRequestDTO createOrderRequestDTO) {
         log.info("[OrderService.createOrder] start, {}번째 손님 주문 : {} 메뉴 - {}개"
                 ,createOrderRequestDTO.getCustomerId(), createOrderRequestDTO.getMenu(), createOrderRequestDTO.getQuantity());
+        String a = "" + createOrderRequestDTO.getOrderId();
+        int cum = 0;
+        for(int i=1,j=2;i<3;i++,j++){
+            cum += i;
+            cum += j;
+        }
         Integer customerId = createOrderRequestDTO.getCustomerId();
         GetOrderResponseDTO getOrderResponseDTO = new GetOrderResponseDTO();
         log.info("[OrderService.createOrder] {}번째 손님 - 주문 등록 start", customerId);

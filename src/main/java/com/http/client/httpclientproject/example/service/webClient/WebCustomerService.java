@@ -28,7 +28,7 @@ public class WebCustomerService {
     private static final String[] MENU = {
             "AMERICANO", "LATTE", "BREAD", "ICE CREAM", "MILK"
     };
-    private static final Integer COUNT = 2;
+    private static final Integer COUNT = 3;
 
     @Transactional
     public void syncBlocking() {
@@ -50,7 +50,8 @@ public class WebCustomerService {
                     .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
                         throw new UserException(INTERNAL_SERVER_ERROR);
                     })
-                    .bodyToMono(GetOrderResponseDTO.class).block();
+                    .bodyToMono(GetOrderResponseDTO.class)
+                    .block();
             if(result != null){
                 resultCheck(result);
             }
