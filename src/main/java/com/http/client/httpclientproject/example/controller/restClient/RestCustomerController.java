@@ -24,6 +24,7 @@ public class RestCustomerController {
     @Operation(summary = "동기", description = "동기")
     public ResponseEntity<Void> syncTest(){
         restCustomerService.syncTest();
+        log.info("test");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
