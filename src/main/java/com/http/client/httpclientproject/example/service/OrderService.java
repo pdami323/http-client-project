@@ -27,6 +27,7 @@ public class OrderService {
         log.info("[OrderService.createOrder] start, {}번째 손님 주문 : {} 메뉴 - {}개"
                 ,createOrderRequestDTO.getCustomerId(), createOrderRequestDTO.getMenu(), createOrderRequestDTO.getQuantity());
         String a = "" + createOrderRequestDTO.getOrderId();
+        log.info("test");
         int cum = 0;
         for(int i=1,j=2;i<3;i++,j++){
             cum += i;
