@@ -9,15 +9,15 @@
         Rules which enforce a specific coding style.
     </description>
 
-    <rule ref="category/java/performance.xml/AddEmptyString" message="Must handle Exceptions">
-        <priority>2</priority>
-<!--        <exclude name="GuardLogStatement"/>-->
-    </rule>
+<!--    <rule ref="category/java/performance.xml/AddEmptyString" message="Must handle Exceptions">-->
+<!--        <priority>2</priority>-->
+<!--&lt;!&ndash;        <exclude name="GuardLogStatement"/>&ndash;&gt;-->
+<!--    </rule>-->
 
-    <rule ref="category/java/bestpractices.xml/ForLoopVariableCount">
-        <priority>1</priority>
-        <properties>
-            <property name="maximumVariables" value="1" />
-        </properties>
-    </rule>
+<!--    <rule ref="category/java/bestpractices.xml/ForLoopVariableCount">-->
+<!--        <priority>1</priority>-->
+<!--        <properties>-->
+<!--            <property name="maximumVariables" value="1" />-->
+<!--        </properties>-->
+<!--    </rule>-->
 </ruleset>
