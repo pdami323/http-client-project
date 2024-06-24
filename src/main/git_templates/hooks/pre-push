@@ -1,0 +1,22 @@
+#!/bin/bash
+echo "data now : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)"
+echo "pre-push start"
+# PMD 실행
+PMD_PATH="pmd/pmd-bin-7.2.0/bin"
+SOURCE_CODE_PATH="src/"
+RULESET_PATH="src/main/resources/rule/customRule.xml"
+REPORT_FILE="pmd/result/pmd-report.txt"
+
+# PMD 실행 명령어
+"$PMD_PATH/pmd" check -d "$SOURCE_CODE_PATH" -R "$RULESET_PATH" -f text -r "$REPORT_FILE"
+
+# PMD 결과 확인
+if [ $? -ne 0 ]; then
+    echo "PMD violations found. Push aborted."
+    echo "data now : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)"
+    exit 1
+fi
+echo "data now : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)"
+exit 1
+
+# PMD 실행 명령어

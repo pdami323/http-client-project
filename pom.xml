@@ -92,40 +92,40 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.23.0</version>
-                <!--PMD 버전 설정-->
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.pmd</groupId>
-                        <artifactId>pmd-java</artifactId>
-                        <version>7.0.0</version>
-                        <type>pom</type>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <targetDirectory>${project.basedir}/pmd/report</targetDirectory>
-                    <!-- ruleSet 설정 -->
-                    <rulesets>
-                        <ruleset>src/main/resources/rule/customRule.xml</ruleset>
-                    </rulesets>
-                    <format>txt</format>
-                    <!-- 위반사항이 발결되었을 때 빌드를 계속 진행할 것인지 -->
-                    <failOnViolation>true</failOnViolation>
-                    <!-- PMD가 분석할 소스코드의 루트 디렉토리 -->
-                    <compileSourceRoots>
-                        <compileSourceRoot>${project.basedir}/src</compileSourceRoot>
-                    </compileSourceRoots>
-                    <!-- PMD가 생성한 보고서가 비어있을 경우 보고서를 생성하지 않고 스킵할지 지정하는 옵션 -->
-                    <skipEmptyReport>true</skipEmptyReport>
-                    <!-- JAVA 문서를 생성할 때 소스코드와 관련된 다른 문서들과의 링크를 생성하는지 여부를 지정하는 옵션 -->
-                    <linkXRef>false</linkXRef>
-                    <!--PMD의 실행을 더 빠르게-->
-                    <analysisCache>true</analysisCache>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-pmd-plugin</artifactId>-->
+<!--                <version>3.23.0</version>-->
+<!--                &lt;!&ndash;PMD 버전 설정&ndash;&gt;-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>net.sourceforge.pmd</groupId>-->
+<!--                        <artifactId>pmd-java</artifactId>-->
+<!--                        <version>7.0.0</version>-->
+<!--                        <type>pom</type>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--                <configuration>-->
+<!--                    <targetDirectory>${project.basedir}/pmd/report</targetDirectory>-->
+<!--                    &lt;!&ndash; ruleSet 설정 &ndash;&gt;-->
+<!--                    <rulesets>-->
+<!--                        <ruleset>src/main/resources/rule/customRule.xml</ruleset>-->
+<!--                    </rulesets>-->
+<!--                    <format>txt</format>-->
+<!--                    &lt;!&ndash; 위반사항이 발결되었을 때 빌드를 계속 진행할 것인지 &ndash;&gt;-->
+<!--                    <failOnViolation>true</failOnViolation>-->
+<!--                    &lt;!&ndash; PMD가 분석할 소스코드의 루트 디렉토리 &ndash;&gt;-->
+<!--                    <compileSourceRoots>-->
+<!--                        <compileSourceRoot>${project.basedir}/src</compileSourceRoot>-->
+<!--                    </compileSourceRoots>-->
+<!--                    &lt;!&ndash; PMD가 생성한 보고서가 비어있을 경우 보고서를 생성하지 않고 스킵할지 지정하는 옵션 &ndash;&gt;-->
+<!--                    <skipEmptyReport>true</skipEmptyReport>-->
+<!--                    &lt;!&ndash; JAVA 문서를 생성할 때 소스코드와 관련된 다른 문서들과의 링크를 생성하는지 여부를 지정하는 옵션 &ndash;&gt;-->
+<!--                    <linkXRef>false</linkXRef>-->
+<!--                    &lt;!&ndash;PMD의 실행을 더 빠르게&ndash;&gt;-->
+<!--                    <analysisCache>true</analysisCache>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
