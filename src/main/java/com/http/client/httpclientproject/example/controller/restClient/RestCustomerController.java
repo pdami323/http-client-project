@@ -27,7 +27,6 @@ public class RestCustomerController {
         log.info("test");
         log.info("test2");
         log.info("test3");
-        log.info("test4");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
